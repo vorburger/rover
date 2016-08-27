@@ -1,0 +1,60 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Rover</title>
+
+  <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+
+  <script>
+    var http = new XMLHttpRequest();
+
+    setInterval(clock, 1000);
+    function clock() {
+      document.getElementById("clock").innerHTML = new Date().toLocaleTimeString();
+	}
+
+    var reNotifyTime = 200;
+  
+    function mouseDown(button) {
+      interval = setInterval(newNotifyStillDownFunction(button), reNotifyTime);
+    }
+
+    // Up is sometimes called twice, with no down
+    function mouseUp(button) {
+      clearInterval(interval);
+      console.log("up " + button);
+      http.open("GET", "/button?name=" + button + "&up=true", true);
+      http.send(null);
+    }
+    
+    function newNotifyStillDownFunction(button) {
+      return function() {
+        console.log("down " + button);
+        http.open("GET", "/button?name=" + button + "&time=" + reNotifyTime, true);
+        http.send(null);
+      }
+    }
+  </script>
+
+  Rover
+  
+  <img src="images/mars-rover-landing-nasa.gif">
+
+  <p><div onmousedown="mouseDown('forward')" onmouseup="mouseUp('forward')">forward</div>
+  <p><div onmousedown="mouseDown('left')" onmouseup="mouseUp('left')">left 90°</div>
+  <p><div onmousedown="mouseDown('right')" onmouseup="mouseUp('right')">right 90°</div>
+  <p><div onmousedown="mouseDown('back')" onmouseup="mouseUp('back')">back</div>
+
+  <img src="images/mars-rover-rolling.gif">
+  <img src="images/mars-rover-cat.gif">
+
+  <p><div id="clock">CLOCK</div>
+</body>
+</html>
