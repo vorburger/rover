@@ -13,13 +13,13 @@
 <body>
 
   <script>
-    var http = new XMLHttpRequest();
-
+/*
     setInterval(clock, 1000);
     function clock() {
       document.getElementById("clock").innerHTML = new Date().toLocaleTimeString();
 	}
-
+*/
+    var http = new XMLHttpRequest();
     var reNotifyTime = 200;
   
     function mouseDown(button) {
@@ -43,8 +43,6 @@
     }
   </script>
 
-  Rover
-  
   <p><div onmousedown="mouseDown('forward')" onmouseup="mouseUp('forward')">&uArr;</div>
   <p><div onmousedown="mouseDown('right')" onmouseup="mouseUp('right')">&#x21B1;</div> <!-- 21BB -->
   <p><div onmousedown="mouseDown('left')" onmouseup="mouseUp('left')">&#x21B0;</div> <!-- 21BA -->
@@ -54,8 +52,8 @@
   <img src="images/mars-rover-landing-nasa.gif">
   <img src="images/mars-rover-rolling.gif">
   <img src="images/mars-rover-cat.gif">
- -->
 
   <p><div id="clock">CLOCK</div>
+ -->
 </body>
 </html>
