@@ -33,7 +33,7 @@ public class ButtonServlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String name = req.getParameter("name");
 		long time = req.getParameter("time") != null ? Long.parseLong(req.getParameter("time")) : 0;
 		boolean up = Boolean.parseBoolean(req.getParameter("up"));

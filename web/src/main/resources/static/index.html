@@ -1,13 +1,19 @@
-<!doctype html>
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,user-scalable=no">
   <title>Rover</title>
 
   <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
   <![endif]-->
+  
+  <style>
+    body        { background-color: #cdd0d7; }
+    div.button  { font-size: 2cm; border: 1px solid powderblue; }
+  </style>
 </head>
 
 <body>
@@ -25,6 +31,7 @@
     var interval;
   
     function mouseDown(button) {
+      log("mouseDown-" + button);
       clearGlobalInterval();
       interval = setInterval(newNotifyStillDownFunction(button), reNotifyTime);
     }
@@ -38,25 +45,33 @@
 
     // Up is sometimes called twice, with no down
     function mouseUp(button) {
+      log("mouseUp-" + button);
       clearGlobalInterval();
-      console.log("up " + button);
-      http.open("GET", "/button?name=" + button + "&up=true", true);
-      http.send(null);
+      httpPost("/button?name=" + button + "&up=true");
     }
     
     function newNotifyStillDownFunction(button) {
       return function() {
-        console.log("down " + button);
-        http.open("GET", "/button?name=" + button + "&time=" + reNotifyTime, true);
-        http.send(null);
+        log("stillDown-" + button);
+        httpPost("/button?name=" + button + "&time=" + reNotifyTime);
       }
+    }
+    
+    function log(msg) {
+      console.log(msg);
+      httpPost("/log?message=" + msg);
+    }
+    
+    function httpPost(url) {
+      http.open("POST", url, true);
+      http.send(null);
     }
   </script>
 
-  <p><div onmousedown="mouseDown('forward')" onmouseup="mouseUp('forward')">&uArr;</div>
-  <p><div onmousedown="mouseDown('right')" onmouseup="mouseUp('right')">&#x21B1;</div> <!-- 21BB -->
-  <p><div onmousedown="mouseDown('left')" onmouseup="mouseUp('left')">&#x21B0;</div> <!-- 21BA -->
-  <p><div onmousedown="mouseDown('back')" onmouseup="mouseUp('back')">&dArr;</div>
+  <p><div class="button" ontouchstart="mouseDown('forward')" onmousedown="mouseDown('forward')" onmouseup="mouseUp('forward')" ontouchend="mouseUp('forward')">&uArr;</div>
+  <p><div class="button" ontouchstart="mouseDown('right')"   onmousedown="mouseDown('right')"   onmouseup="mouseUp('right')"   ontouchend="mouseUp('right')">&#x21B1;</div> <!-- 21BB -->
+  <p><div class="button" ontouchstart="mouseDown('left')"    onmousedown="mouseDown('left')"    onmouseup="mouseUp('left')"    ontouchend="mouseUp('left')">&#x21B0;</div> <!-- 21BA -->
+  <p><div class="button" ontouchstart="mouseDown('back')"    onmousedown="mouseDown('back')"    onmouseup="mouseUp('back')"    ontouchend="mouseUp('back')">&dArr;</div>
 
 <!--
   <img src="images/mars-rover-landing-nasa.gif">
