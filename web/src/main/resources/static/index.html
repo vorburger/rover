@@ -13,6 +13,7 @@
 <body>
 
   <script>
+    "use strict";
 /*
     setInterval(clock, 1000);
     function clock() {
@@ -21,6 +22,7 @@
 */
     var http = new XMLHttpRequest();
     var reNotifyTime = 200;
+    var interval;
   
     function mouseDown(button) {
       clearGlobalInterval();
