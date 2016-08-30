@@ -23,12 +23,20 @@
     var reNotifyTime = 200;
   
     function mouseDown(button) {
+      clearGlobalInterval();
       interval = setInterval(newNotifyStillDownFunction(button), reNotifyTime);
+    }
+
+    function clearGlobalInterval() {
+      if (typeof interval !== 'undefined') {
+        clearInterval(interval);
+        interval = undefined;
+      }
     }
 
     // Up is sometimes called twice, with no down
     function mouseUp(button) {
-      clearInterval(interval);
+      clearGlobalInterval();
       console.log("up " + button);
       http.open("GET", "/button?name=" + button + "&up=true", true);
       http.send(null);
