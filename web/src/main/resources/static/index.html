@@ -11,8 +11,32 @@
   <![endif]-->
   
   <style>
-    body        { background-color: #cdd0d7; }
-    div.button  { font-size: 2cm; border: 1px solid powderblue; }
+    body	{
+    	background-color: #ccc;
+    	margin: 0;
+    	padding: 0;
+    	text-align: center;
+    	vertical-align: middle;
+    	color: #000;}
+    .row {
+    	clear: left;
+    	}
+    .buttonleft  {
+    	font-size: 5em;
+    	width: 40%;
+    	height: 200px;
+    	float: left;
+    	margin: 2%;
+    	border: solid 2px #000;
+    	padding-top: 6%;}
+    .buttonright  {
+    	font-size: 5em;
+    	width: 40%;
+    	height: 200px;
+    	float: left;
+    	margin: 2%;
+    	border: solid 2px #000;
+    	padding-top: 6%;}
   </style>
 </head>
 
@@ -67,12 +91,14 @@
       http.send(null);
     }
   </script>
-
-  <p><div class="button" ontouchstart="mouseDown('forward')" onmousedown="mouseDown('forward')" onmouseup="mouseUp('forward')" ontouchend="mouseUp('forward')">&uArr;</div>
-  <p><div class="button" ontouchstart="mouseDown('right')"   onmousedown="mouseDown('right')"   onmouseup="mouseUp('right')"   ontouchend="mouseUp('right')">&#x21B1;</div> <!-- 21BB -->
-  <p><div class="button" ontouchstart="mouseDown('left')"    onmousedown="mouseDown('left')"    onmouseup="mouseUp('left')"    ontouchend="mouseUp('left')">&#x21B0;</div> <!-- 21BA -->
-  <p><div class="button" ontouchstart="mouseDown('back')"    onmousedown="mouseDown('back')"    onmouseup="mouseUp('back')"    ontouchend="mouseUp('back')">&dArr;</div>
-
+	<div class="row">
+		<div class="buttonleft" ontouchstart="mouseDown('left')"    onmousedown="mouseDown('left')"    onmouseup="mouseUp('left')"    ontouchend="mouseUp('left')">&#x21B0;</div> <!-- 21BA -->
+		<div class="buttonright" ontouchstart="mouseDown('right')"   onmousedown="mouseDown('right')"   onmouseup="mouseUp('right')"   ontouchend="mouseUp('right')">&#x21B1;</div> <!-- 21BB -->
+	</div>
+	<div class="row">
+		<div class="buttonleft" ontouchstart="mouseDown('forward')" onmousedown="mouseDown('forward')" onmouseup="mouseUp('forward')" ontouchend="mouseUp('forward')">&uArr;</div>
+		<div class="buttonright" ontouchstart="mouseDown('back')"    onmousedown="mouseDown('back')"    onmouseup="mouseUp('back')"    ontouchend="mouseUp('back')">&dArr;</div>
+	</div>	
 <!--
   <img src="images/mars-rover-landing-nasa.gif">
   <img src="images/mars-rover-rolling.gif">
