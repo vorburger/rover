@@ -1,0 +1,29 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+version = '1.0.0-SNAPSHOT'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+// https://www.mkyong.com/gradle/gradle-create-a-jar-file-with-dependencies/
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Rover Robot main()',
+            'Implementation-Version': version,
+            'Main-Class': 'ch.vorburger.raspberry.mc33926.ExampleMain'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+
+dependencies {
+    compile('ch.vorburger.raspberry:mc33926:1.0.0-SNAPSHOT')
+    compile('org.slf4j:slf4j-simple:1.7.21')
+}
