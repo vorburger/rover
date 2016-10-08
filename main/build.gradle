@@ -10,7 +10,7 @@ task fatJar(type: Jar) {
     manifest {
         attributes 'Implementation-Title': 'Rover Robot main()',
             'Implementation-Version': version,
-            'Main-Class': 'ch.vorburger.raspberry.mc33926.ExampleMain'
+            'Main-Class': 'ch.vorburger.rover.Main' // 'ch.vorburger.raspberry.mc33926.ExampleMain'
     }
     baseName = project.name + '-all'
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
