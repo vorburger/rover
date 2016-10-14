@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,user-scalable=no">
+  <title>Rover</title>
+
+  <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+  <![endif]-->
+  
+  <style>
+    body	{
+    	background-color: #ccc;
+    	margin: 0;
+    	padding: 0;
+    	text-align: center;
+    	vertical-align: middle;
+    	color: #000;}
+    .row {
+    	clear: left;
+    	}
+    .buttonleft  {
+    	font-size: 5em;
+    	width: 40%;
+    	height: 200px;
+    	float: left;
+    	margin: 2%;
+    	border: solid 2px #000;
+    	padding-top: 6%;}
+    .buttonright  {
+    	font-size: 5em;
+    	width: 40%;
+    	height: 200px;
+    	float: left;
+    	margin: 2%;
+    	border: solid 2px #000;
+    	padding-top: 6%;}
+  </style>
+</head>
+
+<body>
+
+  <script>
+    "use strict";
+/*
+    setInterval(clock, 1000);
+    function clock() {
+      document.getElementById("clock").innerHTML = new Date().toLocaleTimeString();
+	}
+*/
+    var http = new XMLHttpRequest();
+    var reNotifyTime = 200;
+    var interval;
+  
+    function mouseDown(button) {
+      log("mouseDown-" + button);
+      clearGlobalInterval();
+      interval = setInterval(newNotifyStillDownFunction(button), reNotifyTime);
+    }
+
+    function clearGlobalInterval() {
+      if (typeof interval !== 'undefined') {
+        clearInterval(interval);
+        interval = undefined;
+      }
+    }
+
+    // Up is sometimes called twice, with no down
+    function mouseUp(button) {
+      log("mouseUp-" + button);
+      clearGlobalInterval();
+      httpPost("/rest/items/Rover", "AHALT");
+    }
+    
+    function newNotifyStillDownFunction(button) {
+      return function() {
+        log("stillDown-" + button);
+        httpPost("/rest/items/Rover", button);
+      }
+    }
+    
+    function log(msg) {
+      console.log(msg);
+    }
+    
+    function httpPost(url, body) {
+      http.open("POST", url, true);
+      http.send(body);
+    }
+  </script>
+	<div class="row">
+		<div class="buttonleft" ontouchstart="mouseDown('ALEFT90')"    onmousedown="mouseDown('ALEFT90')"    onmouseup="mouseUp('ALEFT90')"    ontouchend="mouseUp('ALEFT90')">&#x21B0;</div> <!-- 21BA -->
+		<div class="buttonright" ontouchstart="mouseDown('ARIGHT90')"   onmousedown="mouseDown('ARIGHT90')"   onmouseup="mouseUp('ARIGHT90')"   ontouchend="mouseUp('ARIGHT90')">&#x21B1;</div> <!-- 21BB -->
+	</div>
+	<div class="row">
+		<div class="buttonleft" ontouchstart="mouseDown('AFORWARD4')" onmousedown="mouseDown('AFORWARD4')" onmouseup="mouseUp('AFORWARD4')" ontouchend="mouseUp('AFORWARD4')">&uArr;</div>
+		<div class="buttonright" ontouchstart="mouseDown('ABACK4')"    onmousedown="mouseDown('ABACK4')"    onmouseup="mouseUp('ABACK4')"    ontouchend="mouseUp('ABACK4')">&dArr;</div>
+	</div>	
+<!--
+  <img src="images/mars-rover-landing-nasa.gif">
+  <img src="images/mars-rover-rolling.gif">
+  <img src="images/mars-rover-cat.gif">
+
+  <p><div id="clock">CLOCK</div>
+ -->
+</body>
+</html>
